@@ -1,0 +1,12 @@
+.intro {
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+  justify-content: center;
+  height: 100vh;
+}
+.intro-wrapper {
+  background: url('../../assets/img/bg.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+}

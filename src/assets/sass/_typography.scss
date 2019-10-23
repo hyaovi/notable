@@ -1,0 +1,80 @@
+@mixin headings {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @content;
+  }
+}
+@include headings {
+  font-weight: 500;
+}
+
+$base: 12;
+$map-headings: (
+  'headline-6': 12,
+  'headline-5': 14,
+  'headline-4': 20,
+  'headline-3': 24,
+  'headline-2': 36,
+  'headline-1': 52
+);
+@each $headline, $size in $map-headings {
+  .#{$headline} {
+    font-size: $size * $px !important;
+    margin-bottom: $font-base * 2px !important;
+    font-weight: 500 !important;
+  }
+}
+$map-paragraph: (
+  'xs': 12,
+  'sm': 14,
+  'md': 16,
+  'lg': 18,
+  'xl': 20
+);
+@each $p, $size in $map-paragraph {
+  .text-#{$p} {
+    font-size: $size * $px !important;
+    margin-top: $size * 1.5px !important;
+  }
+}
+$map-color: (
+  'blue': $blue,
+  'primary': $teal,
+  'violet': $violet,
+  'danger': $redish,
+  'warning': $yellow,
+  'success': $green,
+  'dark': $dark,
+  'grey': $color-grey,
+  'white': $color-white,
+  'light': $color-light
+);
+@each $name, $color in $map-color {
+  .text-#{$name} {
+    color: $color !important;
+  }
+  .bg-#{$name} {
+    background-color: $color !important;
+  }
+}
+$map-weight: (
+  'weight-light': 300,
+  'weight-regular': 400,
+  'weight-medium': 500,
+  'weight-bold': 700
+);
+@each $name, $size in $map-weight {
+  .font-#{$name} {
+    font-weight: $size !important;
+  }
+}
+.text-center {
+  text-align: center !important;
+}
+.text-right {
+  text-align: right;
+}

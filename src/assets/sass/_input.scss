@@ -1,0 +1,40 @@
+$base-size: 4px;
+input {
+  font-size: 15px;
+}
+input[type='text'] {
+  border: 1px solid $color-light;
+  padding: 2 * $base-size 3 * $base-size;
+  color: $dark !important;
+  background-color: $color-light;
+  margin-bottom: 2 * $base-size;
+  display: block;
+  width: 100%;
+  &:focus {
+    border-color: rgba($green, 0.4);
+    border-radius: $base-size;
+  }
+}
+input[type='date'] {
+  border: 1px solid $color-light;
+  padding: 2 * $base-size 3 * $base-size;
+  color: $dark !important;
+  background-color: $color-light;
+  margin-bottom: 2 * $base-size;
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  background-clip: padding-box;
+}
+
+input {
+  &.input-lg {
+    padding: 3 * $base-size 3 * $base-size;
+  }
+}
+label {
+  color: $color-grey;
+}
+.border-green {
+  border: 1px solid $color-green;
+}

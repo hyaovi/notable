@@ -1,0 +1,42 @@
+// colors
+$blue: #0052cc;
+$teal: #00b8d9;
+$violet: #6554c0;
+$redish: #ff5630;
+$yellow: #ffab00;
+$green: #03a87c;
+$dark: #172b4d;
+
+//font base
+$font-base: 12;
+
+// Breakpoints
+$grid-breakpoint-sm: 600px;
+$grid-breakpoint-md: 768px;
+$grid-breakpoint-lg: 992px;
+$grid-breakpoint-xl: 1200px;
+
+$columns: 12;
+$font-size-base: 16;
+$column-gutter: 15;
+$px: 1px;
+// Custom Colors
+$color-black: #212f3c;
+$color-dark: $dark;
+$color-grey: rgba($dark, 0.6);
+$color-blue: #0271e3;
+$color-green: $green;
+$color-white: #fff;
+$color-light: #f5f8fc;
+
+$text-color: $color-black;
+$input-color-placeholder: silver;
+$color-modal-bg: $color-white;
+$text-base-size: $font-size-base;
+$heading-base-size: 4;
+
+html {
+  body {
+    color: $color-black;
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "en": {
+    "TODAY": "Today",
+    "YOU_HAVE": "You have ",
+    "TODO_TODAY": " task(s) todo",
+    "BTN_ADD": "Add",
+    "BTN_CANCEL": "Cancel",
+    "BTN_SAVE": "Save",
+    "BTN_NEW_TASK": "New task",
+    "ADD_TASK_PLACEHOLDER": "What do you have in mind?",
+    "NO_TASK": "You have no task"
+  }
+}

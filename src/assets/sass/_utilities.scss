@@ -1,0 +1,71 @@
+//spacing
+$base: 4px;
+$quantity: 8;
+@mixin spacings($i, $type, $prefix) {
+  .#{$prefix}r-#{$i} {
+    #{$type}-right: $i * $base !important;
+  }
+  .#{$prefix}l-#{$i} {
+    #{$type}-left: $i * $base !important;
+  }
+  .#{$prefix}b-#{$i} {
+    #{$type}-bottom: $i * $base !important;
+  }
+  .#{$prefix}t-#{$i} {
+    #{$type}-top: $i * $base !important;
+  }
+  .#{$prefix}x-#{$i} {
+    @extend .#{$prefix}r-#{$i};
+    @extend .#{$prefix}l-#{$i};
+  }
+  .#{$prefix}y-#{$i} {
+    @extend .#{$prefix}t-#{$i};
+    @extend .#{$prefix}b-#{$i};
+  }
+  .#{$prefix}-#{$i} {
+    @extend .#{$prefix}x-#{$i};
+    @extend .#{$prefix}y-#{$i};
+  }
+}
+@for $i from 0 through $quantity {
+  @include spacings($i, 'margin', 'm');
+  @include spacings($i, 'padding', 'p');
+}
+
+@mixin spacings-auto($i, $type, $prefix) {
+  .#{$prefix}r-#{$i} {
+    #{$type}-right: auto;
+  }
+  .#{$prefix}l-#{$i} {
+    #{$type}-left: auto;
+  }
+  .#{$prefix}b-#{$i} {
+    #{$type}-bottom: auto;
+  }
+  .#{$prefix}t-#{$i} {
+    #{$type}-top: auto;
+  }
+  .#{$prefix}x-#{$i} {
+    @extend .#{$prefix}r-#{$i};
+    @extend .#{$prefix}l-#{$i};
+  }
+  .#{$prefix}y-#{$i} {
+    @extend .#{$prefix}t-#{$i};
+    @extend .#{$prefix}b-#{$i};
+  }
+  .#{$prefix}-#{$i} {
+    @extend .#{$prefix}x-#{$i};
+    @extend .#{$prefix}y-#{$i};
+  }
+}
+
+@include spacings-auto('auto', 'margin', 'm');
+@include spacings-auto('auto', 'padding', 'p');
+.shadow {
+  box-shadow: 0 16px 20px rgba($color: #9fb1c3, $alpha: 0.3);
+}
+.block {
+  display: block;
+  width: 100%;
+  margin: auto;
+}

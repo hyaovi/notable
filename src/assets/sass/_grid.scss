@@ -1,0 +1,122 @@
+@import 'variable';
+
+@mixin create-media-query($breakpoint, $width-prefix) {
+  @if ($width-prefix== '') {
+    $width-prefix: 'min';
+  }
+  @if ($breakpoint==0) {
+    @content;
+  } @else if($breakpoint==-1) {
+    @content;
+  } @else {
+    @media screen and (#{$width-prefix}-width: $breakpoint ) {
+      @content;
+    }
+  }
+}
+
+@mixin create-cols($breakpoint, $max-columns, $col-suffix) {
+  @include create-media-query($breakpoint, 'min') {
+    @for $i from 1 through $max-columns {
+      .col#{$col-suffix}-#{$i} {
+        box-sizing: border-box !important;
+        position: relative;
+        flex: auto !important ;
+        flex-grow: 1 !important;
+        flex-shrink: 1 !important;
+        flex-basis: auto !important;
+        width: (100/ ($max-columns/$i)) * 1% !important;
+        padding-right: $column-gutter * $px;
+        padding-left: $column-gutter * $px;
+      }
+    }
+  }
+}
+$map-grid-props: (
+  '': 0,
+  '-sm': $grid-breakpoint-sm,
+  '-md': $grid-breakpoint-md,
+  '-lg': $grid-breakpoint-lg,
+  '-xl': $grid-breakpoint-xl
+);
+
+* {
+  box-sizing: border-box;
+}
+.container {
+  max-width: $grid-breakpoint-lg;
+  margin: 0 auto;
+
+  &-fluid {
+    @extend .container;
+    max-width: 100%;
+    margin-left: $font-size-base * $px;
+    margin-right: $font-size-base * $px;
+  }
+  &-md {
+    @extend .container;
+    max-width: $grid-breakpoint-md;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+// [class*='col'] {
+//   width: auto;
+//   flex: auto !important ;
+// }
+
+@media screen and (max-width: $grid-breakpoint-sm) {
+  @for $i from 1 through $columns {
+    .col-xs-#{$i} {
+      width: (100/ ($columns/$i)) * 1%;
+      flex: auto !important ;
+    }
+  }
+}
+@each $col-suffix, $breakpoint in $map-grid-props {
+  @include create-cols($breakpoint, $columns, $col-suffix);
+}
+
+@each $suffix, $breakpoint in $map-grid-props {
+  @if ($suffix== '') {
+    $modifier: 'xs';
+  }
+  @include create-media-query(($breakpoint - 1), 'max') {
+    .hidden#{$suffix}-down {
+      display: none !important;
+    }
+    .block#{$suffix}-down {
+      display: block;
+      width: 100%;
+      margin: auto !important;
+    }
+  }
+  @include create-media-query(($breakpoint - 1), 'min') {
+    .hidden#{$suffix}-up {
+      display: none !important;
+    }
+    .block#{$suffix}-up {
+      display: block;
+      width: 100%;
+      margin: auto !important;
+    }
+  }
+}
+
+.flexbox {
+  display: flex !important;
+}
+.flex-column {
+  flex-direction: column !important;
+}
+.flex-align-content {
+  align-content: center !important;
+}
+.align-items-center {
+  align-items: center !important;
+}

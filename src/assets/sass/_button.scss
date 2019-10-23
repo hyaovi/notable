@@ -1,0 +1,63 @@
+.btn,
+a.btn {
+  font-size: ($font-size-base - 1) * $px;
+  text-decoration: none;
+  border: none;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  margin: 0.5rem;
+  &-sm {
+    padding: 0.5rem 1rem;
+  }
+}
+
+.rounded {
+  border-radius: ($font-size-base/4) * $px;
+}
+.rounded-lg {
+  border-radius: ($font-size-base/2) * $px;
+}
+.pill {
+  border-radius: 50rem;
+}
+$map-color: (
+  'blue': $blue,
+  'primary': $green,
+  'violet': $violet,
+  'danger': $redish,
+  'warning': $yellow,
+  'success': $green,
+  'dark': $dark,
+  'white': $color-white,
+  'light': $color-light
+);
+@each $name, $bgcolor in $map-color {
+  $color: $color-light;
+  @if ($name== 'light') {
+    $color: $dark;
+  } @else if ($name== 'white') {
+    $color: $dark;
+  } @else {
+    $color: $color-light;
+  }
+  .btn-#{$name} {
+    color: $color !important;
+    background-color: rgba($color: $bgcolor, $alpha: 0.99);
+    &:hover {
+      background-color: rgba($color: $bgcolor, $alpha: 1);
+      content: 'bictch';
+    }
+  }
+}
+@each $name, $color in $map-color {
+  $bgcolor: $color-white;
+  .btn-outline-#{$name} {
+    background-color: $bgcolor !important;
+    color: $color;
+    border: 1px solid rgba($color: $color, $alpha: 1);
+    &:hover {
+      background-color: $color !important;
+      color: $color-white !important;
+    }
+  }
+}
