@@ -1,15 +1,23 @@
-import { LOGIN, LOGOUT, GET_USER_DATA, LOADING } from '../actions/actionTypes';
+import {
+  LOGIN,
+  LOGOUT,
+  SET_USER_DATA,
+  LOADING,
+  FINISHED_LOADING,
+  CLEAR_USER_DATA
+} from '../actions/actionTypes';
 
 const initialState = {
   isAuthenticated: false,
   loading: false
 };
 const extractUserData = data => {
-  const { uid, email, name, currency } = data.payload;
-  return { uid, email, name, currency };
+  const { uid, email } = data;
+  return { uid, email };
 };
 const authReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case LOGIN:
       const info = extractUserData(action);
       return {
@@ -21,17 +29,27 @@ const authReducer = (state = initialState, action) => {
     case LOADING:
       return {
         ...state,
-        loading: action.payload
+        loading: payload
+      };
+    case FINISHED_LOADING:
+      return {
+        ...state,
+        loading: payload
       };
     case LOGOUT:
       return {
-        isAuthenticated: false,
-        loading: false
+        ...initialState,
+        isAuthenticated: false
       };
-    case GET_USER_DATA:
+    case CLEAR_USER_DATA:
+      return {
+        isAuthenticated: false
+      };
+    case SET_USER_DATA:
       return {
         ...state,
-        ...action.payload,
+        isAuthenticated: true,
+        ...payload,
         loading: false
       };
     default:

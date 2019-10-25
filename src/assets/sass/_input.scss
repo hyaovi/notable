@@ -1,18 +1,24 @@
 $base-size: 4px;
-input {
+input,
+input[type='text'],
+input[type='email'],
+input[type='password'] {
   font-size: 16px;
+  margin-bottom: 2 * $base-size;
+  display: block !important;
+  border-radius: 1.2 * $base-size !important;
+  border: 2px solid $color-light !important;
+  width: 100% !important;
 }
 input[type='text'] {
-  border: 1px solid $color-light;
   padding: 2 * $base-size 3 * $base-size;
   color: $dark !important;
   background-color: $color-light;
-  margin-bottom: 2 * $base-size;
-  display: block;
+
+  display: block !important;
   width: 100%;
   &:focus {
     border-color: rgba($green, 0.4);
-    border-radius: $base-size;
   }
 }
 input[type='date'] {

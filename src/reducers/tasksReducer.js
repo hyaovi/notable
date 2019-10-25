@@ -2,7 +2,8 @@ import {
   ADD_NEW_TASK,
   TOGGLE_TASK_STATUS,
   DELETE_TASK,
-  EDIT_TASK
+  EDIT_TASK,
+  SET_TASK_LIST
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -12,38 +13,27 @@ const initialState = {
 const taskReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case SET_TASK_LIST: {
+      return { ...state, list: payload || [] };
+    }
     case ADD_NEW_TASK: {
-      const updatedList = [
-        ...state.list,
-        { ...payload, id: `0${state.list.length + 1}` }
-      ];
-      return {
-        ...state,
-        list: updatedList
-      };
+      return state;
     }
     case TOGGLE_TASK_STATUS: {
-      let tasksList = state.list;
-      const taskIndex = tasksList.findIndex(item => item.id === payload);
-      tasksList[taskIndex] = {
-        ...tasksList[taskIndex],
-        completed: !tasksList[taskIndex].completed
-      };
-      return { ...state, list: tasksList };
+      return state;
     }
     case EDIT_TASK: {
-      const { taskId, data } = payload;
-      let tasksList = state.list;
-      const taskIndex = tasksList.findIndex(item => item.id === taskId);
-      tasksList[taskIndex] = {
-        ...tasksList[taskIndex],
-        ...data
-      };
-      return { ...state, list: tasksList };
+      // const { taskId, data } = payload;
+      // let tasksList = state.list;
+      // const taskIndex = tasksList.findIndex(item => item.id === taskId);
+      // tasksList[taskIndex] = {
+      //   ...tasksList[taskIndex],
+      //   ...data
+      // };
+      return state;
     }
     case DELETE_TASK: {
-      let updatedList = state.list.filter(item => item.id !== payload);
-      return { ...state, list: updatedList };
+      return state;
     }
     default:
       return state;

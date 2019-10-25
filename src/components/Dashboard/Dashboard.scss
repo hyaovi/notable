@@ -46,15 +46,18 @@
   user-select: none;
   display: block;
   input {
-    display: none;
+    display: none !important;
   }
   .checkbox {
     top: 0;
     left: 0;
     height: 25px;
     width: 25px;
-    color: #03a87c;
+    color: lightgrey;
     display: inline-block;
     background-color: #fff;
+    &.checked {
+      color: #03a87c !important;
+    }
   }
 }

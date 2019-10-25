@@ -1,16 +1,32 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+  useCallback
+} from 'react';
 import { Trash2 as Trash, Circle, CheckCircle } from 'react-feather';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Switch, useRouteMatch, useHistory } from 'react-router-dom';
+import { FirebaseContext } from '../../firebase';
+import {
+  Route,
+  Switch,
+  useRouteMatch,
+  useHistory,
+  Redirect
+} from 'react-router-dom';
+import { useSession } from '../session';
 import moment from 'moment';
 import {
   addNewTask,
   ToggleTaskStatus,
   deleteTask,
-  editTask
+  editTask,
+  setTaskList
 } from '../../actions/tasksActions';
 import './Dashboard.scss';
 import DICT from './Dashboard.dict.json';
+import { logOut } from '../../actions/authActions';
 
 const StatusBar = ({ taskNumber }) => {
   return (
@@ -26,6 +42,8 @@ const StatusBar = ({ taskNumber }) => {
 };
 function TaskInput({ closeTaskForm }) {
   const dispatch = useDispatch();
+  const firebase = useContext(FirebaseContext);
+  const { uid } = useSession();
   const ref = useRef(null);
   useEffect(() => {
     ref.current.focus();
@@ -34,7 +52,6 @@ function TaskInput({ closeTaskForm }) {
   const [date, setDate] = useState(() => moment().format('YYYY-MM-DD'));
   const onInputNoteChange = ({ target: { value } }) => setNote(value);
   const onInputDateChange = ({ target: { value } }) => {
-    console.log(value);
     setDate(value);
   };
   const sumbitNewTask = () => {
@@ -46,7 +63,7 @@ function TaskInput({ closeTaskForm }) {
       time: '',
       createdAt: Date.now()
     };
-    addNewTask(dispatch, data);
+    addNewTask(dispatch, firebase, uid, data);
   };
   const SubmitTask = event => {
     event.preventDefault();
@@ -99,6 +116,8 @@ function TaskEdit({
     params: { taskId }
   }
 }) {
+  const firebase = useContext(FirebaseContext);
+  const { uid } = useSession();
   let history = useHistory();
   let { list } = useSelector(state => state.tasks);
   let taskToEdit = list.filter(task => task.id === taskId)[0] || {};
@@ -120,7 +139,7 @@ function TaskEdit({
       date: date,
       editedAt: Date.now()
     };
-    editTask(dispatch, taskId, data, history);
+    editTask(dispatch, firebase, uid, taskId, data, history);
   };
   const SubmitTask = event => {
     event.preventDefault();
@@ -176,31 +195,32 @@ function TaskRow({ task }) {
   let { url } = useRouteMatch();
   let history = useHistory();
   const dispatch = useDispatch();
+  const firebase = useContext(FirebaseContext);
+  const { uid } = useSession();
   const { id, note, completed, date } = task;
   const editTask = id => {
-    console.log(id);
     history.push(`${url}/edit/${id}`);
   };
   return (
-    <div className="task-row row align-items-center rounded-lg mb-3 p-4 ">
+    <div className="task-row row align-items-center rounded-lg mb-3 p-2 ">
       <div className="col-xs-1 ">
         <label className="checkbox-label">
           <input
             type="checkbox"
             name="check"
-            onChange={() => ToggleTaskStatus(dispatch, id)}
+            onChange={() => ToggleTaskStatus(dispatch, firebase, uid, id)}
             checked={completed}
           />
           {completed ? (
-            <CheckCircle className="checkbox" />
+            <CheckCircle className="checkbox checked " />
           ) : (
-            <Circle className="checkbox" />
+            <Circle className="checkbox " />
           )}
         </label>
       </div>
       <div className="col-xs-10 col-md-10" onClick={() => editTask(id)}>
         <div className="row align-items-center">
-          <div className="col-12 col-md-9  task-note py-2">
+          <div className="col-12 col-md-9  task-note my-0">
             <span>{note}</span>
           </div>
           <div className="col-12 col-md-2 date">
@@ -214,7 +234,7 @@ function TaskRow({ task }) {
         <Trash
           className="icon "
           size="18"
-          onClick={() => deleteTask(dispatch, id)}
+          onClick={() => deleteTask(dispatch, firebase, uid, id)}
         />
       </div>
     </div>
@@ -231,43 +251,74 @@ const TaskLister = ({ list }) => {
     </>
   );
 };
-
+const LogOut = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const firebase = useContext(FirebaseContext);
+  return (
+    <button
+      className="btn btn-sm"
+      onClick={() => logOut(dispatch, firebase, history)}
+    >
+      Log out
+    </button>
+  );
+};
 function Dashboard({ match: { path } }) {
-  console.log(`${path}/edit`);
+  const dispatch = useDispatch();
+  const firebase = useContext(FirebaseContext);
+  const { isAuthenticated, uid } = useSession();
+  const setUserTasksList = useCallback(() => {
+    if (isAuthenticated) {
+      setTaskList(dispatch, firebase, uid);
+    }
+  }, [dispatch, firebase, uid, isAuthenticated]);
+  useEffect(() => {
+    setUserTasksList();
+    return () => setUserTasksList();
+  }, [setUserTasksList]);
   let { list } = useSelector(state => state.tasks);
+
   const [showInput, setShowInput] = useState(false);
   const openTaskForm = () => setShowInput(true);
   const closeTaskForm = () => setShowInput(false);
   const taskNumber = list.length;
+
   return (
-    <div className="container">
-      <div className="px-4">
-        <StatusBar taskNumber={taskNumber} />
-
-        <Switch>
-          <Route
-            exact
-            path={path}
-            render={() => (
-              <>
-                <TaskLister list={list} />
-                {!showInput && (
-                  <button
-                    onClick={openTaskForm}
-                    className="btn btn-outline-primary rounded block-md-down"
-                  >
-                    {DICT['en'].BTN_NEW_TASK}
-                  </button>
+    <>
+      {isAuthenticated ? (
+        <div className="container">
+          <div className="px-4">
+            <LogOut />
+            <StatusBar taskNumber={taskNumber} />
+            <Switch>
+              <Route
+                exact
+                path={path}
+                render={() => (
+                  <>
+                    <TaskLister list={list} />
+                    {!showInput && (
+                      <button
+                        onClick={openTaskForm}
+                        className="btn btn-outline-primary rounded block-md-down"
+                      >
+                        {DICT['en'].BTN_NEW_TASK}
+                      </button>
+                    )}
+                    {showInput && <TaskInput closeTaskForm={closeTaskForm} />}
+                  </>
                 )}
-                {showInput && <TaskInput closeTaskForm={closeTaskForm} />}
-              </>
-            )}
-          />
+              />
 
-          <Route path={`${path}/edit/:taskId`} component={TaskEdit} />
-        </Switch>
-      </div>
-    </div>
+              <Route path={`${path}/edit/:taskId`} component={TaskEdit} />
+            </Switch>
+          </div>
+        </div>
+      ) : (
+        <Redirect to="/landing" />
+      )}
+    </>
   );
 }
 

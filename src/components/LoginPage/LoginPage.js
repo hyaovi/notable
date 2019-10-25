@@ -1,14 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { Redirect, Link } from 'react-router-dom';
-import * as ROUTES from '../../constant/routes';
-import './LandingPage.scss';
+import { Redirect } from 'react-router-dom';
+
+import './LoginPage.scss';
 import { FirebaseContext } from '../../firebase';
 import { useDispatch } from 'react-redux';
-import { signUp } from '../../actions/authActions';
-import DICT from './LandingPage.dict.json';
+import { signIn } from '../../actions/authActions';
+import DICT from './LoginPage.dict.json';
 import { useSession } from '../session';
 
-function LandingPage() {
+import { SignUpLink } from '../LandingPage';
+function LoginPage() {
   const { isAuthenticated } = useSession();
   return (
     <>
@@ -21,7 +22,7 @@ function LandingPage() {
             </div>
             <div className="row ">
               <div className="col-md-4 col-lg-2 col-xl-2 col-xs-10 p-3">
-                <SignUpForm />
+                <SignInForm />
               </div>
             </div>
           </div>
@@ -33,7 +34,7 @@ function LandingPage() {
   );
 }
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const firebase = useContext(FirebaseContext);
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
@@ -43,11 +44,11 @@ const SignUpForm = () => {
   const onSubmit = event => {
     event.preventDefault();
     const userData = { email, password };
-    signUp(firebase, dispatch, userData);
+    signIn(firebase, dispatch, userData);
   };
   return (
     <div className="p-4 rounded bg-white">
-      <h3 className="text-center">Sign up</h3>
+      <h3 className="text-center">Signin</h3>
       <form className="row" onSubmit={onSubmit}>
         <div className=" col-12">
           <input
@@ -74,20 +75,10 @@ const SignUpForm = () => {
         </div>
       </form>
       <div className="mt-8">
-        <SignInLink />
+        <SignUpLink />
       </div>
     </div>
   );
 };
 
-export const SignInLink = () => (
-  <Link className="btn text-grey" to={ROUTES.SIGN_IN}>
-    Sign in
-  </Link>
-);
-export const SignUpLink = () => (
-  <Link className="btn text-grey" to={ROUTES.LANDING}>
-    Sign up
-  </Link>
-);
-export default LandingPage;
+export default LoginPage;

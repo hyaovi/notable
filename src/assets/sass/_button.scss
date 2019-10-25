@@ -4,6 +4,7 @@ a.btn {
   text-decoration: none;
   border: none;
   padding: 0.8rem 1rem;
+  border-radius: ($font-size-base/4) * $px;
   cursor: pointer;
   margin: 0.5rem;
   &-sm {
@@ -13,6 +14,9 @@ a.btn {
 
 .rounded {
   border-radius: ($font-size-base/4) * $px;
+}
+.rounded-0 {
+  border-radius: 0;
 }
 .rounded-lg {
   border-radius: ($font-size-base/2) * $px;
