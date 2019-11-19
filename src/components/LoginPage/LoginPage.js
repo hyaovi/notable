@@ -15,13 +15,13 @@ function LoginPage() {
     <>
       {!isAuthenticated ? (
         <div className="intro">
-          <div className="text-center  container-fluid">
+          <div className="text-center container-fluid">
             <div>
               <h1 className="headline-1 text-white mb-2">{DICT['en'].NAME}</h1>
               <p className="text-light">{DICT['en'].TITLE}</p>
             </div>
             <div className="row ">
-              <div className="col-md-4 col-lg-2 col-xl-2 col-xs-10 p-3">
+              <div className="col-md-10  col-xs-10 p-3">
                 <SignInForm />
               </div>
             </div>

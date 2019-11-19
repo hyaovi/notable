@@ -21,11 +21,8 @@
       .col#{$col-suffix}-#{$i} {
         box-sizing: border-box !important;
         position: relative;
-        flex: auto !important ;
-        flex-grow: 1 !important;
-        flex-shrink: 1 !important;
-        flex-basis: auto !important;
-        width: (100/ ($max-columns/$i)) * 1% !important;
+        flex: 0 1 (100/ ($max-columns/$i)) * 1% !important ;
+        max-width: (100/ ($max-columns/$i)) * 1% !important;
         padding-right: $column-gutter * $px;
         padding-left: $column-gutter * $px;
       }
@@ -64,17 +61,22 @@ $map-grid-props: (
   flex-wrap: wrap;
   width: 100%;
 }
-
-// [class*='col'] {
-//   width: auto;
-//   flex: auto !important ;
+// .col {
+//   flex-basis: 0;
+//   flex-grow: 1;
+//   max-width: 100%;
 // }
 
-@media screen and (max-width: $grid-breakpoint-sm) {
+// [class*='col'] {
+//   min-height: 1rem;
+//   border: brown 1px solid;
+// }
+
+@media screen and (min-width: $grid-breakpoint-sm) {
   @for $i from 1 through $columns {
     .col-xs-#{$i} {
       width: (100/ ($columns/$i)) * 1%;
-      flex: auto !important ;
+      flex: 0 1 (100/ ($columns/$i)) * 1% !important;
     }
   }
 }

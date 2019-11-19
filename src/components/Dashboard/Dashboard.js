@@ -203,24 +203,26 @@ function TaskRow({ task }) {
   };
   return (
     <div className="task-row row align-items-center rounded-lg mb-3 p-2 ">
-      <div className="col-xs-1 ">
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            name="check"
-            onChange={() => ToggleTaskStatus(dispatch, firebase, uid, id)}
-            checked={completed}
-          />
-          {completed ? (
-            <CheckCircle className="checkbox checked " />
-          ) : (
-            <Circle className="checkbox " />
-          )}
-        </label>
+      <div className=" ">
+        <div className="mr-1">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              name="check"
+              onChange={() => ToggleTaskStatus(dispatch, firebase, uid, id)}
+              checked={completed}
+            />
+            {completed ? (
+              <CheckCircle className="checkbox checked " />
+            ) : (
+              <Circle className="checkbox " />
+            )}
+          </label>
+        </div>
       </div>
-      <div className="col-xs-10 col-md-10" onClick={() => editTask(id)}>
-        <div className="row align-items-center">
-          <div className="col-12 col-md-9  task-note my-0">
+      <div className="col-xs-10 col-md-10 px-0" onClick={() => editTask(id)}>
+        <div className="row align-items-center px-0">
+          <div className="col-12 col-md-10  task-note my-0 px-0">
             <span>{note}</span>
           </div>
           <div className="col-12 col-md-2 date">
@@ -264,6 +266,22 @@ const LogOut = () => {
     </button>
   );
 };
+const Cols = () => (
+  <div className="row">
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+  </div>
+);
 function Dashboard({ match: { path } }) {
   const dispatch = useDispatch();
   const firebase = useContext(FirebaseContext);
@@ -297,6 +315,7 @@ function Dashboard({ match: { path } }) {
                 path={path}
                 render={() => (
                   <>
+                    <Cols />
                     <TaskLister list={list} />
                     {!showInput && (
                       <button
