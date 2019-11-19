@@ -1,43 +1,33 @@
-import React, { useState, useContext } from 'react';
-import { Redirect, Link } from 'react-router-dom';
-import * as ROUTES from '../../constant/routes';
-import './LandingPage.scss';
-import { FirebaseContext } from '../../firebase';
-import { useDispatch } from 'react-redux';
-import { signUp } from '../../actions/authActions';
-import DICT from './LandingPage.dict.json';
-import { useSession } from '../session';
+import React, { useState, useContext } from "react";
+import { Redirect, Link } from "react-router-dom";
+import * as ROUTES from "../../constant/routes";
+import "./LandingPage.scss";
+import { FirebaseContext } from "../../firebase";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../actions/authActions";
+import DICT from "./LandingPage.dict.json";
+import { useSession } from "../session";
 
+const Landing = () => (
+  <div className="intro">
+    <div className="row">
+      <div className="col-md-4">
+        <SignUpForm />
+      </div>
+      <div className="col-md-8 side-hero"></div>
+    </div>
+  </div>
+);
 function LandingPage() {
   const { isAuthenticated } = useSession();
-  return (
-    <>
-      {!isAuthenticated ? (
-        <div className="intro">
-          <div className="text-center  container-fluid">
-            <div>
-              <h1 className="headline-1 text-white mb-2">{DICT['en'].NAME}</h1>
-              <p className="text-light">{DICT['en'].TITLE}</p>
-            </div>
-            <div className="row ">
-              <div className="col-md-10 col-xs-10 p-3">
-                <SignUpForm />
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <Redirect to="/dashboard" />
-      )}
-    </>
-  );
+  return <>{!isAuthenticated ? <Landing /> : <Redirect to="/dashboard" />}</>;
 }
 
 const SignUpForm = () => {
   const firebase = useContext(FirebaseContext);
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const onInputEmailChange = ({ target }) => setEmail(target.value);
   const onInputPasswordChange = ({ target }) => setPassword(target.value);
   const onSubmit = event => {

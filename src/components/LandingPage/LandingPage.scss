@@ -2,15 +2,6 @@ $blue: #0747a6;
 $green: #03a87c;
 $teal: #00b8d9;
 
-.intro {
-  display: flex;
-  align-items: center;
-  flex-flow: row wrap;
-  justify-content: center;
+.side-hero {
   background-color: $blue;
-  height: 100vh;
-}
-.intro-wrapper {
-  background-size: cover;
-  background-position: center;
 }
