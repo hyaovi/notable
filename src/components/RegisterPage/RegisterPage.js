@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import './LoginPage.scss';
+import './RegisterPage.scss';
 import { FirebaseContext } from '../../firebase';
 import { useDispatch } from 'react-redux';
 import { signIn } from '../../actions/authActions';
-import DICT from './LoginPage.dict.json';
+import DICT from './RegisterPage.dict.json';
 import { useSession } from '../session';
 
 import { SignUpLink } from '../LandingPage';
-function LoginPage() {
+function RegisterPage() {
   const { isAuthenticated } = useSession();
   return (
     <>
@@ -81,4 +81,4 @@ const SignInForm = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

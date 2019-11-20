@@ -10,11 +10,11 @@ import {
 import '../../assets/sass/mint.scss';
 import LandingPage from '../LandingPage';
 import Dashboard from '../Dashboard';
-import LoginPage from '../LoginPage';
 import * as ROUTES from '../../constant/routes';
 import { useAuthState } from '../session';
 import { FirebaseContext } from '../../firebase';
 import { setCurrentUser } from '../../actions/authActions';
+import RegisterPage from '../RegisterPage/RegisterPage';
 
 export default () => {
   const firebase = useContext(FirebaseContext);
@@ -38,7 +38,7 @@ export default () => {
           <Switch>
             <Route path={ROUTES.DASHBOARD} component={Dashboard} />
             <Route path={ROUTES.LANDING} component={LandingPage} />
-            <Route path={ROUTES.SIGN_IN} component={LoginPage} />
+            <Route path={ROUTES.SIGN_UP} component={RegisterPage} />
             <Redirect from={ROUTES.ROOT} to="/dashboard" />
           </Switch>
         </Router>
