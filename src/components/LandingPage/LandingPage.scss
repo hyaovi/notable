@@ -1,16 +1,16 @@
-$blue: #0747a6;
-$green: #03a87c;
-$teal: #00b8d9;
-
 .intro {
   display: flex;
   align-items: center;
-  flex-flow: row wrap;
+  flex-flow: row wrap-reverse;
   justify-content: center;
-  background-color: $blue;
-  height: 100vh;
 }
-.intro-wrapper {
+.side-hero {
+  min-height: 100vh;
+  background: linear-gradient(rgba(37, 56, 88, 0.6), rgba(37, 56, 88, 0.6)),
+    url('../../assets/img/landing-bg.jpg') no-repeat center;
   background-size: cover;
-  background-position: center;
+  display: flex;
+  align-items: flex-end;
+}
+@media screen and (max-width: 568px) {
 }

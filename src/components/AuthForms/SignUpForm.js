@@ -20,7 +20,7 @@ export default () => {
 
   return (
     <div className="p-4 rounded bg-white">
-      <h3 className="text-center">Sign up</h3>
+      <h3 className="">Sign up</h3>
       <form onSubmit={onSubmit}>
         <div>
           <input
@@ -46,7 +46,7 @@ export default () => {
             onSubmit={onSubmit}
             disabled
           >
-            Submit
+            Register
           </button>
         </div>
       </form>

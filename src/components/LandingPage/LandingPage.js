@@ -12,12 +12,12 @@ function LandingPage() {
     <>
       {!isAuthenticated ? (
         <div className="row intro">
-          <div className="col-md-8">
+          <div className="col-md-6">
             <h1 className="headline-1  mb-2">{DICT['en'].NAME}</h1>
-            <p className="">{DICT['en'].TITLE}</p>
+            <p className="">{DICT['en'].SUB_TITLE}</p>
             <SignUpForm />
           </div>
-          <div className="col-md-16">
+          <div className="col-md-18 text-white pb-6 side-hero">
             <h1>{DICT['en'].TITLE}</h1>
           </div>
         </div>
