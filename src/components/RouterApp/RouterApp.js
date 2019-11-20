@@ -7,7 +7,6 @@ import {
   Redirect
 } from 'react-router-dom';
 
-import './App.scss';
 import '../../assets/sass/mint.scss';
 import LandingPage from '../LandingPage';
 import Dashboard from '../Dashboard';
@@ -17,7 +16,7 @@ import { useAuthState } from '../session';
 import { FirebaseContext } from '../../firebase';
 import { setCurrentUser } from '../../actions/authActions';
 
-function RouterApp() {
+export default () => {
   const firebase = useContext(FirebaseContext);
   const { initialize, userAuth } = useAuthState(firebase);
   const dispatch = useDispatch();
@@ -46,6 +45,4 @@ function RouterApp() {
       )}
     </>
   );
-}
-
-export default RouterApp;
+};
