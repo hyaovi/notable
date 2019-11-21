@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
-import { FirebaseContext } from '../../../firebase';
-import { useDispatch } from 'react-redux';
-import { signIn } from '../../../actions/authActions';
-import { SignUpLink } from '../../LandingPage';
+import React, { useState, useContext } from "react";
+import { FirebaseContext } from "../../../firebase";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../../actions/authActions";
+import { SignUpLink } from "../../LandingPage";
 
 export default () => {
   const firebase = useContext(FirebaseContext);
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const onInputEmailChange = ({ target }) => setEmail(target.value);
   const onInputPasswordChange = ({ target }) => setPassword(target.value);
   const onSubmit = event => {
@@ -43,7 +43,7 @@ export default () => {
           disabled={!isValid}
           onSubmit={onSubmit}
         >
-          Register
+          Log in
         </button>
       </form>
       <div className="mt-8">

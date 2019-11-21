@@ -4,31 +4,31 @@ import React, {
   useEffect,
   useContext,
   useCallback
-} from 'react';
-import { Trash2 as Trash, Circle, CheckCircle } from 'react-feather';
-import { useSelector, useDispatch } from 'react-redux';
-import { FirebaseContext } from '../../firebase';
+} from "react";
+import { Trash2 as Trash, Circle, CheckCircle } from "react-feather";
+import { useSelector, useDispatch } from "react-redux";
+import { FirebaseContext } from "../../firebase";
 import {
   Route,
   Switch,
   useRouteMatch,
   useHistory,
   Redirect
-} from 'react-router-dom';
-import { useSession } from '../session';
-import moment from 'moment';
+} from "react-router-dom";
+import { useSession } from "../session";
+import moment from "moment";
 import {
   addNewTask,
   ToggleTaskStatus,
   deleteTask,
   editTask,
   setTaskList
-} from '../../actions/tasksActions';
-import './Dashboard.scss';
-import DICT from './Dashboard.dict.json';
-import { logOut } from '../../actions/authActions';
-import Navbar from './Navbar';
-
+} from "../../actions/tasksActions";
+import "./Dashboard.scss";
+import DICT from "./Dashboard.dict.json";
+import { logOut } from "../../actions/authActions";
+import Navbar from "./Navbar";
+import Sidebar from "../Sidebar";
 function TaskInput({ closeTaskForm }) {
   const dispatch = useDispatch();
   const firebase = useContext(FirebaseContext);
@@ -37,8 +37,8 @@ function TaskInput({ closeTaskForm }) {
   useEffect(() => {
     ref.current.focus();
   }, []);
-  const [note, setNote] = useState('');
-  const [date, setDate] = useState(() => moment().format('YYYY-MM-DD'));
+  const [note, setNote] = useState("");
+  const [date, setDate] = useState(() => moment().format("YYYY-MM-DD"));
   const onInputNoteChange = ({ target: { value } }) => setNote(value);
   const onInputDateChange = ({ target: { value } }) => {
     setDate(value);
@@ -47,9 +47,9 @@ function TaskInput({ closeTaskForm }) {
     const data = {
       note: note,
       completed: false,
-      completedAt: '',
+      completedAt: "",
       date: date,
-      time: '',
+      time: "",
       createdAt: Date.now()
     };
     addNewTask(dispatch, firebase, uid, data);
@@ -69,18 +69,18 @@ function TaskInput({ closeTaskForm }) {
           ref={ref}
           value={note}
           onChange={onInputNoteChange}
-          placeholder={DICT['en'].ADD_TASK_PLACEHOLDER}
+          placeholder={DICT["en"].ADD_TASK_PLACEHOLDER}
         />
       </div>
       <div className="col-12 col-md-5">
         <input
           className="input-lg rounded"
-          placeholder={moment().format('YYYY-MM-DD')}
+          placeholder={moment().format("YYYY-MM-DD")}
           type="date"
           value={date}
           onChange={onInputDateChange}
           name="date"
-          min={moment().format('YYYY-MM-DD')}
+          min={moment().format("YYYY-MM-DD")}
         />
       </div>
       <div className="col-12 row">
@@ -88,13 +88,13 @@ function TaskInput({ closeTaskForm }) {
           className="btn btn-sm btn-outline-primary rounded block-md-down "
           onClick={SubmitTask}
         >
-          {DICT['en'].BTN_ADD}
+          {DICT["en"].BTN_ADD}
         </button>
         <button
           className=" btn btn-sm btn-outline-light text-grey  rounded block-md-down"
           onClick={closeTaskForm}
         >
-          {DICT['en'].BTN_CANCEL}
+          {DICT["en"].BTN_CANCEL}
         </button>
       </div>
     </form>
@@ -117,7 +117,7 @@ function TaskEdit({
   }, [list.length]);
   const [note, setNote] = useState(taskToEdit.note);
   const [date, setDate] = useState(
-    moment(taskToEdit.date).format('YYYY-MM-DD')
+    moment(taskToEdit.date).format("YYYY-MM-DD")
   );
   const onInputNoteChange = ({ target: { value } }) => setNote(value);
   const onInputDateChange = ({ target: { value } }) => setDate(value);
@@ -145,18 +145,18 @@ function TaskEdit({
               ref={ref}
               value={note}
               onChange={onInputNoteChange}
-              placeholder={DICT['en'].ADD_TASK_PLACEHOLDER}
+              placeholder={DICT["en"].ADD_TASK_PLACEHOLDER}
             />
           </div>
           <div className="col-12 col-md-5">
             <input
               className="input-lg rounded"
-              placeholder={moment().format('YYYY-MM-DD')}
+              placeholder={moment().format("YYYY-MM-DD")}
               type="date"
               value={date}
               onChange={onInputDateChange}
               name="date"
-              min={moment().format('YYYY-MM-DD')}
+              min={moment().format("YYYY-MM-DD")}
             />
           </div>
           <div className="col-12 row">
@@ -164,13 +164,13 @@ function TaskEdit({
               className="btn btn-sm btn-outline-primary rounded block-md-down "
               onClick={SubmitTask}
             >
-              {DICT['en'].BTN_SAVE}
+              {DICT["en"].BTN_SAVE}
             </button>
             <button
               className=" btn btn-sm btn-outline-light text-grey  rounded block-md-down"
-              onClick={() => history.push('/dashboard')}
+              onClick={() => history.push("/dashboard")}
             >
-              {DICT['en'].BTN_CANCEL}
+              {DICT["en"].BTN_CANCEL}
             </button>
           </div>
         </form>
@@ -216,7 +216,7 @@ function TaskRow({ task }) {
           </div>
           <div className="col-12 col-md-2 date">
             <span className="text-xs text-grey ">
-              {moment(date).format('DD-MMM-YYYY')}
+              {moment(date).format("DD-MMM-YYYY")}
             </span>
           </div>
         </div>
@@ -237,7 +237,7 @@ const TaskLister = ({ list }) => {
       {list.length > 0 ? (
         list.map(item => <TaskRow key={item.id} task={item} />)
       ) : (
-        <p className="text-center">{DICT['en'].NO_TASK}</p>
+        <p className="text-center">{DICT["en"].NO_TASK}</p>
       )}
     </>
   );
@@ -295,7 +295,7 @@ function Dashboard({ match: { path } }) {
                         onClick={openTaskForm}
                         className="btn btn-outline-primary rounded block-md-down"
                       >
-                        {DICT['en'].BTN_NEW_TASK}
+                        {DICT["en"].BTN_NEW_TASK}
                       </button>
                     )}
                     {showInput && <TaskInput closeTaskForm={closeTaskForm} />}
