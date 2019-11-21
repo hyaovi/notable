@@ -1,12 +1,10 @@
 @import 'variable';
-
+$columns: 12;
 @mixin create-media-query($breakpoint, $width-prefix) {
   @if ($width-prefix== '') {
     $width-prefix: 'min';
   }
-  @if ($breakpoint==0) {
-    @content;
-  } @else if($breakpoint==-1) {
+  @if ($breakpoint==0 or $breakpoint==-1) {
     @content;
   } @else {
     @media screen and (#{$width-prefix}-width: $breakpoint ) {
@@ -14,32 +12,28 @@
     }
   }
 }
+@mixin create-col($col-suffix, $i, $max-columns) {
+  .col#{$col-suffix}-#{$i} {
+    flex: 0 1 (100/ ($max-columns/$i)) * 1% !important ;
+    max-width: (100/ ($max-columns/$i)) * 1% !important;
+  }
+}
 
 @mixin create-cols($breakpoint, $max-columns, $col-suffix) {
   @include create-media-query($breakpoint, 'min') {
     @for $i from 1 through $max-columns {
-      .col#{$col-suffix}-#{$i} {
-        box-sizing: border-box !important;
-        position: relative;
-        flex: 0 1 (100/ ($max-columns/$i)) * 1% !important ;
-        max-width: (100/ ($max-columns/$i)) * 1% !important;
-        padding-right: $column-gutter * $px;
-        padding-left: $column-gutter * $px;
-      }
+      @include create-col($col-suffix, $i, $max-columns);
     }
   }
 }
 $map-grid-props: (
   '': 0,
+  '-xs': $grid-breakpoint-xs,
   '-sm': $grid-breakpoint-sm,
   '-md': $grid-breakpoint-md,
   '-lg': $grid-breakpoint-lg,
   '-xl': $grid-breakpoint-xl
 );
-
-* {
-  box-sizing: border-box;
-}
 .container {
   max-width: $grid-breakpoint-lg;
   margin: 0 auto;
@@ -61,25 +55,20 @@ $map-grid-props: (
   flex-wrap: wrap;
   width: 100%;
 }
-// .col {
-//   flex-basis: 0;
-//   flex-grow: 1;
-//   max-width: 100%;
-// }
-
-// [class*='col'] {
-//   min-height: 1rem;
-//   border: brown 1px solid;
-// }
-
-@media screen and (min-width: $grid-breakpoint-sm) {
-  @for $i from 1 through $columns {
-    .col-xs-#{$i} {
-      width: (100/ ($columns/$i)) * 1%;
-      flex: 0 1 (100/ ($columns/$i)) * 1% !important;
-    }
-  }
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
 }
+
+[class*='col'] {
+  min-height: 1rem;
+  box-sizing: border-box !important;
+  position: relative;
+  padding-right: $column-gutter * $px;
+  padding-left: $column-gutter * $px;
+}
+
 @each $col-suffix, $breakpoint in $map-grid-props {
   @include create-cols($breakpoint, $columns, $col-suffix);
 }
@@ -110,7 +99,7 @@ $map-grid-props: (
   }
 }
 
-.flexbox {
+.flex {
   display: flex !important;
 }
 .flex-column {

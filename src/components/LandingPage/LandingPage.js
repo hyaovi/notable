@@ -4,7 +4,7 @@ import * as ROUTES from '../../constant/routes';
 import './LandingPage.scss';
 import DICT from './LandingPage.dict.json';
 import { useSession } from '../session';
-import { SignInForm } from '../AuthForms';
+import { SignInForm } from '../common/AuthForms';
 
 function LandingPage() {
   const { isAuthenticated } = useSession();
@@ -12,12 +12,12 @@ function LandingPage() {
     <>
       {!isAuthenticated ? (
         <div className="row intro">
-          <div className="col-md-6">
-            <h1 className="headline-1  mb-2">{DICT['en'].NAME}</h1>
+          <div className="col-md-8 px-8">
+            <h1 className="headline-1 text-blue  mb-2">{DICT['en'].NAME}</h1>
             <p className="">{DICT['en'].SUB_TITLE}</p>
             <SignInForm />
           </div>
-          <div className="col-md-18 text-white pb-6 side-hero">
+          <div className="col-md-16 text-white pb-6 side-hero">
             <h1>{DICT['en'].TITLE}</h1>
           </div>
         </div>
@@ -28,14 +28,6 @@ function LandingPage() {
   );
 }
 
-export const SignInLink = () => (
-  <Link className="btn text-blue" to={ROUTES.SIGN_IN}>
-    Sign in
-  </Link>
-);
-export const SignUpLink = () => (
-  <Link className="btn text-grey" to={ROUTES.SIGN_UP}>
-    Sign up
-  </Link>
-);
+export const SignInLink = () => <Link to={ROUTES.SIGN_IN}>Sign in</Link>;
+export const SignUpLink = () => <Link to={ROUTES.SIGN_UP}>Sign up</Link>;
 export default LandingPage;

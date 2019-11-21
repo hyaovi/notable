@@ -27,19 +27,8 @@ import {
 import './Dashboard.scss';
 import DICT from './Dashboard.dict.json';
 import { logOut } from '../../actions/authActions';
+import Navbar from './Navbar';
 
-const StatusBar = ({ taskNumber }) => {
-  return (
-    <div className=" status-bar bg-white text-sm text-center bg-light rounded-lg p-1 py-4 my-4 mx-auto">
-      <p className="text-sm hidden-md-down my-2">
-        {DICT['en'].TODAY}, {moment().format('DD MMM YYYY')}
-      </p>
-      <p className="font-weight-bold text-md my-1">
-        {DICT['en'].YOU_HAVE} ({taskNumber}) {DICT['en'].TODO_TODAY}
-      </p>
-    </div>
-  );
-};
 function TaskInput({ closeTaskForm }) {
   const dispatch = useDispatch();
   const firebase = useContext(FirebaseContext);
@@ -266,22 +255,7 @@ const LogOut = () => {
     </button>
   );
 };
-const Cols = () => (
-  <div className="row">
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-    <div className="col-1"></div>
-  </div>
-);
+
 function Dashboard({ match: { path } }) {
   const dispatch = useDispatch();
   const firebase = useContext(FirebaseContext);
@@ -305,17 +279,16 @@ function Dashboard({ match: { path } }) {
   return (
     <>
       {isAuthenticated ? (
-        <div className="container">
+        <div className="container-fluid">
           <div className="px-4">
             <LogOut />
-            <StatusBar taskNumber={taskNumber} />
+            <Navbar DICT={DICT} taskNumber={taskNumber} />
             <Switch>
               <Route
                 exact
                 path={path}
                 render={() => (
                   <>
-                    <Cols />
                     <TaskLister list={list} />
                     {!showInput && (
                       <button

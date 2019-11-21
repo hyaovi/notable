@@ -5,12 +5,13 @@ $violet: #6554c0;
 $redish: #ff5630;
 $yellow: #ffab00;
 $green: #03a87c;
-$dark: #172b4d;
+$dark: #253858;
 
 //font base
 $font-base: 12;
 
 // Breakpoints
+$grid-breakpoint-xs: 576px;
 $grid-breakpoint-sm: 600px;
 $grid-breakpoint-md: 768px;
 $grid-breakpoint-lg: 992px;
@@ -27,7 +28,7 @@ $color-grey: rgba($dark, 0.6);
 $color-blue: #0271e3;
 $color-green: $green;
 $color-white: #fff;
-$color-light: #f5f8fc;
+$color-light: #dbdcde;
 
 $text-color: $color-black;
 $input-color-placeholder: silver;

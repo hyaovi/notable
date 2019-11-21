@@ -2,29 +2,22 @@ import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import './RegisterPage.scss';
-import { FirebaseContext } from '../../firebase';
-import { useDispatch } from 'react-redux';
-import { signIn } from '../../actions/authActions';
 import DICT from './RegisterPage.dict.json';
 import { useSession } from '../session';
-
-import { SignUpLink } from '../LandingPage';
+import { SignUpForm } from '../common/AuthForms';
 function RegisterPage() {
   const { isAuthenticated } = useSession();
   return (
     <>
       {!isAuthenticated ? (
-        <div className="intro">
-          <div className="text-center container-fluid">
-            <div>
-              <h1 className="headline-1 text-white mb-2">{DICT['en'].NAME}</h1>
-              <p className="text-light">{DICT['en'].TITLE}</p>
-            </div>
-            <div className="row ">
-              <div className="col-md-10  col-xs-10 p-3">
-                <SignInForm />
-              </div>
-            </div>
+        <div className="row intro">
+          <div className="col-md-8 px-8">
+            <h1 className="headline-1 text-blue  mb-2">{DICT['en'].NAME}</h1>
+            <p className="">{DICT['en'].SUB_TITLE}</p>
+            <SignUpForm />
+          </div>
+          <div className="col-md-16 text-white pb-6 side-hero">
+            <h1>{DICT['en'].TITLE}</h1>
           </div>
         </div>
       ) : (
@@ -33,52 +26,5 @@ function RegisterPage() {
     </>
   );
 }
-
-const SignInForm = () => {
-  const firebase = useContext(FirebaseContext);
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const onInputEmailChange = ({ target }) => setEmail(target.value);
-  const onInputPasswordChange = ({ target }) => setPassword(target.value);
-  const onSubmit = event => {
-    event.preventDefault();
-    const userData = { email, password };
-    signIn(firebase, dispatch, userData);
-  };
-  return (
-    <div className="p-4 rounded bg-white">
-      <h3 className="text-center">Signin</h3>
-      <form className="row" onSubmit={onSubmit}>
-        <div className=" col-12">
-          <input
-            className="input-lg "
-            placeholder="email"
-            type="email"
-            value={email}
-            onChange={onInputEmailChange}
-          />
-        </div>
-        <div className="col-12">
-          <input
-            className="input-lg "
-            placeholder="password"
-            type="password"
-            value={password}
-            onChange={onInputPasswordChange}
-          />
-        </div>
-        <div className="col-12">
-          <button className="mx-0 block btn btn-blue" onSubmit={onSubmit}>
-            Submit
-          </button>
-        </div>
-      </form>
-      <div className="mt-8">
-        <SignUpLink />
-      </div>
-    </div>
-  );
-};
 
 export default RegisterPage;

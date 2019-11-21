@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="66" height="70" viewBox="0 0 66 70">
+  <g id="logo" transform="translate(-370 -80)">
+    <path id="Polygon_1" data-name="Polygon 1" d="M23.955,19.187a10,10,0,0,1,18.091,0l17.23,36.549A10,10,0,0,1,50.23,70H15.77A10,10,0,0,1,6.725,55.736Z" transform="translate(370 80)" fill="#253858" opacity="0.4"/>
+    <path id="Polygon_2" data-name="Polygon 2" d="M19.573,11.5a6,6,0,0,1,10.853,0L45.962,44.44A6,6,0,0,1,40.536,53H9.464a6,6,0,0,1-5.427-8.56Z" transform="translate(378 92)" fill="#253858"/>
+  </g>
+</svg>
