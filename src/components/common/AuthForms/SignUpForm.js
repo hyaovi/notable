@@ -39,7 +39,7 @@ export default () => {
         />
 
         <button
-          className="mx-0  btn btn-blue"
+          className="mx-0  btn btn-primary btn-block"
           onSubmit={onSubmit}
           disabled={!isValid}
         >

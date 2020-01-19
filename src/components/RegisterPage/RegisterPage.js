@@ -10,14 +10,15 @@ function RegisterPage() {
   return (
     <>
       {!isAuthenticated ? (
-        <div className="row intro">
-          <div className="col-md-8 px-8">
-            <h1 className="headline-1 text-blue  mb-2">{DICT['en'].NAME}</h1>
+        <div className="row intro text-center">
+          <div className="col-lg-4 col-md-8 card ">
+            <h1 className="headline-1 text-primary    mb-2">
+              {DICT['en'].NAME}
+            </h1>
+            <h4>{DICT['en'].TITLE}</h4>
+
             <p className="">{DICT['en'].SUB_TITLE}</p>
             <SignUpForm />
-          </div>
-          <div className="col-md-16 text-white pb-6 side-hero">
-            <h1>{DICT['en'].TITLE}</h1>
           </div>
         </div>
       ) : (

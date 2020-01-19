@@ -279,7 +279,7 @@ function Dashboard({ match: { path } }) {
   return (
     <>
       {isAuthenticated ? (
-        <div className="container-fluid">
+        <div className="container">
           <div className="px-4">
             <LogOut />
             <Navbar DICT={DICT} taskNumber={taskNumber} />

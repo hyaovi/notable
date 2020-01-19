@@ -3,15 +3,13 @@
   align-items: center;
   flex-flow: row wrap-reverse;
   justify-content: center;
-}
-.side-hero {
   min-height: 100vh;
-  background: linear-gradient(rgba(37, 56, 88, 0.6), rgba(37, 56, 88, 0.6)),
+  background: linear-gradient(rgba(37, 56, 88, 0.6), rgba(37, 56, 88, 0.4)),
     url('../../assets/img/landing-bg.jpg') no-repeat center;
-  background-size: cover;
-  display: flex;
-  align-items: flex-end;
 }
-.auth-form {
-  max-width: 320px;
+.card {
+  border: 1px solid white;
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
 }
