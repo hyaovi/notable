@@ -3,32 +3,33 @@ import React, {
   useRef,
   useEffect,
   useContext,
-  useCallback
-} from "react";
-import { Trash2 as Trash, Circle, CheckCircle } from "react-feather";
-import { useSelector, useDispatch } from "react-redux";
-import { FirebaseContext } from "../../firebase";
+  useCallback,
+} from 'react';
+import { Trash2 as Trash, Circle, CheckCircle } from 'react-feather';
+import { useSelector, useDispatch } from 'react-redux';
+import { FirebaseContext } from '../../firebase';
 import {
   Route,
   Switch,
   useRouteMatch,
   useHistory,
-  Redirect
-} from "react-router-dom";
-import { useSession } from "../session";
-import moment from "moment";
+  Redirect,
+} from 'react-router-dom';
+import { useSession } from '../session';
+import moment from 'moment';
 import {
   addNewTask,
   ToggleTaskStatus,
   deleteTask,
   editTask,
-  setTaskList
-} from "../../actions/tasksActions";
-import "./Dashboard.scss";
-import DICT from "./Dashboard.dict.json";
-import { logOut } from "../../actions/authActions";
-import Navbar from "./Navbar";
-import Sidebar from "../Sidebar";
+  setTaskList,
+} from '../../actions/tasksActions';
+import './Dashboard.scss';
+import DICT from './Dashboard.dict.json';
+import { logOut } from '../../actions/authActions';
+import Navbar from './Navbar';
+import { LogOut as LogOutIcon } from 'react-feather';
+import Sidebar from '../Sidebar';
 function TaskInput({ closeTaskForm }) {
   const dispatch = useDispatch();
   const firebase = useContext(FirebaseContext);
@@ -37,8 +38,8 @@ function TaskInput({ closeTaskForm }) {
   useEffect(() => {
     ref.current.focus();
   }, []);
-  const [note, setNote] = useState("");
-  const [date, setDate] = useState(() => moment().format("YYYY-MM-DD"));
+  const [note, setNote] = useState('');
+  const [date, setDate] = useState(() => moment().format('YYYY-MM-DD'));
   const onInputNoteChange = ({ target: { value } }) => setNote(value);
   const onInputDateChange = ({ target: { value } }) => {
     setDate(value);
@@ -47,10 +48,10 @@ function TaskInput({ closeTaskForm }) {
     const data = {
       note: note,
       completed: false,
-      completedAt: "",
+      completedAt: '',
       date: date,
-      time: "",
-      createdAt: Date.now()
+      time: '',
+      createdAt: Date.now(),
     };
     addNewTask(dispatch, firebase, uid, data);
   };
@@ -61,40 +62,40 @@ function TaskInput({ closeTaskForm }) {
   };
 
   return (
-    <form className="row p-4 shadow rounded" onSubmit={SubmitTask}>
-      <div className="col-12 col-md-5">
+    <form className='row p-4 shadow rounded' onSubmit={SubmitTask}>
+      <div className='col-12 col-md-5'>
         <input
-          className="input-lg rounded"
-          type="text"
+          className='input-lg rounded'
+          type='text'
           ref={ref}
           value={note}
           onChange={onInputNoteChange}
-          placeholder={DICT["en"].ADD_TASK_PLACEHOLDER}
+          placeholder={DICT['en'].ADD_TASK_PLACEHOLDER}
         />
       </div>
-      <div className="col-12 col-md-5">
+      <div className='col-12 col-md-5'>
         <input
-          className="input-lg rounded"
-          placeholder={moment().format("YYYY-MM-DD")}
-          type="date"
+          className='input-lg rounded'
+          placeholder={moment().format('YYYY-MM-DD')}
+          type='date'
           value={date}
           onChange={onInputDateChange}
-          name="date"
-          min={moment().format("YYYY-MM-DD")}
+          name='date'
+          min={moment().format('YYYY-MM-DD')}
         />
       </div>
-      <div className="col-12 row">
+      <div className='col-12 row'>
         <button
-          className="btn btn-sm btn-outline-primary rounded block-md-down "
+          className='btn btn-sm btn-outline-primary rounded block-md-down '
           onClick={SubmitTask}
         >
-          {DICT["en"].BTN_ADD}
+          {DICT['en'].BTN_ADD}
         </button>
         <button
-          className=" btn btn-sm btn-outline-light text-grey  rounded block-md-down"
+          className=' btn btn-sm btn-outline-light text-grey  rounded block-md-down'
           onClick={closeTaskForm}
         >
-          {DICT["en"].BTN_CANCEL}
+          {DICT['en'].BTN_CANCEL}
         </button>
       </div>
     </form>
@@ -102,8 +103,8 @@ function TaskInput({ closeTaskForm }) {
 }
 function TaskEdit({
   match: {
-    params: { taskId }
-  }
+    params: { taskId },
+  },
 }) {
   const firebase = useContext(FirebaseContext);
   const { uid } = useSession();
@@ -117,7 +118,7 @@ function TaskEdit({
   }, [list.length]);
   const [note, setNote] = useState(taskToEdit.note);
   const [date, setDate] = useState(
-    moment(taskToEdit.date).format("YYYY-MM-DD")
+    moment(taskToEdit.date).format('YYYY-MM-DD')
   );
   const onInputNoteChange = ({ target: { value } }) => setNote(value);
   const onInputDateChange = ({ target: { value } }) => setDate(value);
@@ -126,7 +127,7 @@ function TaskEdit({
     const data = {
       note: note,
       date: date,
-      editedAt: Date.now()
+      editedAt: Date.now(),
     };
     editTask(dispatch, firebase, uid, taskId, data, history);
   };
@@ -137,40 +138,40 @@ function TaskEdit({
   return (
     <>
       {list.length > 0 ? (
-        <form className="row p-4 shadow rounded" onSubmit={SubmitTask}>
-          <div className="col-12 col-md-5">
+        <form className='row p-4 shadow rounded' onSubmit={SubmitTask}>
+          <div className='col-12 col-md-5'>
             <input
-              className="input-lg rounded"
-              type="text"
+              className='input-lg rounded'
+              type='text'
               ref={ref}
               value={note}
               onChange={onInputNoteChange}
-              placeholder={DICT["en"].ADD_TASK_PLACEHOLDER}
+              placeholder={DICT['en'].ADD_TASK_PLACEHOLDER}
             />
           </div>
-          <div className="col-12 col-md-5">
+          <div className='col-12 col-md-5'>
             <input
-              className="input-lg rounded"
-              placeholder={moment().format("YYYY-MM-DD")}
-              type="date"
+              className='input-lg rounded'
+              placeholder={moment().format('YYYY-MM-DD')}
+              type='date'
               value={date}
               onChange={onInputDateChange}
-              name="date"
-              min={moment().format("YYYY-MM-DD")}
+              name='date'
+              min={moment().format('YYYY-MM-DD')}
             />
           </div>
-          <div className="col-12 row">
+          <div className='col-12 row'>
             <button
-              className="btn btn-sm btn-outline-primary rounded block-md-down "
+              className='btn btn-sm btn-outline-primary rounded block-md-down '
               onClick={SubmitTask}
             >
-              {DICT["en"].BTN_SAVE}
+              {DICT['en'].BTN_SAVE}
             </button>
             <button
-              className=" btn btn-sm btn-outline-light text-grey  rounded block-md-down"
-              onClick={() => history.push("/dashboard")}
+              className=' btn btn-sm btn-outline-light text-grey  rounded block-md-down'
+              onClick={() => history.push('/dashboard')}
             >
-              {DICT["en"].BTN_CANCEL}
+              {DICT['en'].BTN_CANCEL}
             </button>
           </div>
         </form>
@@ -191,40 +192,40 @@ function TaskRow({ task }) {
     history.push(`${url}/edit/${id}`);
   };
   return (
-    <div className="task-row row align-items-center rounded-lg mb-3 p-2 ">
-      <div className=" ">
-        <div className="mr-1">
-          <label className="checkbox-label">
+    <div className='task-row row align-items-center rounded-lg mb-3 p-2 '>
+      <div className=' '>
+        <div className='mr-1'>
+          <label className='checkbox-label'>
             <input
-              type="checkbox"
-              name="check"
+              type='checkbox'
+              name='check'
               onChange={() => ToggleTaskStatus(dispatch, firebase, uid, id)}
               checked={completed}
             />
             {completed ? (
-              <CheckCircle className="checkbox checked " />
+              <CheckCircle className='checkbox checked ' />
             ) : (
-              <Circle className="checkbox " />
+              <Circle className='checkbox ' />
             )}
           </label>
         </div>
       </div>
-      <div className="col-xs-10 col-md-10 px-0" onClick={() => editTask(id)}>
-        <div className="row align-items-center px-0">
-          <div className="col-12 col-md-10  task-note my-0 px-0">
+      <div className='col-xs-10 col-md-10 px-0' onClick={() => editTask(id)}>
+        <div className='row align-items-center px-0'>
+          <div className='col-12 col-md-10  task-note my-0 px-0'>
             <span>{note}</span>
           </div>
-          <div className="col-12 col-md-2 date">
-            <span className="text-xs text-grey ">
-              {moment(date).format("DD-MMM-YYYY")}
+          <div className='col-12 col-md-2 date'>
+            <span className='text-xs text-grey '>
+              {moment(date).format('DD-MMM-YYYY')}
             </span>
           </div>
         </div>
       </div>
-      <div className="col-xs-1 ">
+      <div className='col-xs-1 '>
         <Trash
-          className="icon "
-          size="18"
+          className='icon '
+          size='18'
           onClick={() => deleteTask(dispatch, firebase, uid, id)}
         />
       </div>
@@ -237,21 +238,21 @@ const TaskLister = ({ list }) => {
       {list.length > 0 ? (
         list.map(item => <TaskRow key={item.id} task={item} />)
       ) : (
-        <p className="text-center">{DICT["en"].NO_TASK}</p>
+        <p className='text-center'>{DICT['en'].NO_TASK}</p>
       )}
     </>
   );
 };
-const LogOut = () => {
+export const LogOutBtn = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const firebase = useContext(FirebaseContext);
   return (
     <button
-      className="btn btn-sm"
+      className='btn btn-sm px-1'
       onClick={() => logOut(dispatch, firebase, history)}
     >
-      Log out
+      <LogOutIcon size={16} className=' text-dark mx-2' />
     </button>
   );
 };
@@ -279,9 +280,8 @@ function Dashboard({ match: { path } }) {
   return (
     <>
       {isAuthenticated ? (
-        <div className="container">
-          <div className="px-4">
-            <LogOut />
+        <div className='container'>
+          <div className='px-4'>
             <Navbar DICT={DICT} taskNumber={taskNumber} />
             <Switch>
               <Route
@@ -293,9 +293,9 @@ function Dashboard({ match: { path } }) {
                     {!showInput && (
                       <button
                         onClick={openTaskForm}
-                        className="btn btn-outline-primary rounded block-md-down"
+                        className='btn btn-outline-primary rounded block-md-down'
                       >
-                        {DICT["en"].BTN_NEW_TASK}
+                        {DICT['en'].BTN_NEW_TASK}
                       </button>
                     )}
                     {showInput && <TaskInput closeTaskForm={closeTaskForm} />}
@@ -308,7 +308,7 @@ function Dashboard({ match: { path } }) {
           </div>
         </div>
       ) : (
-        <Redirect to="/landing" />
+        <Redirect to='/landing' />
       )}
     </>
   );
