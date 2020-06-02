@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import * as ROUTES from '../../constant/routes';
@@ -6,6 +7,16 @@ import DICT from './LandingPage.dict.json';
 import { useSession } from '../session';
 import { SignInForm } from '../common/AuthForms';
 
+const Landing = () => (
+  <div className="intro">
+    <div className="row">
+      <div className="col-md-4">
+        <SignUpForm />
+      </div>
+      <div className="col-md-8 side-hero"></div>
+    </div>
+  </div>
+);
 function LandingPage() {
   const { isAuthenticated } = useSession();
   return (
@@ -29,4 +40,6 @@ function LandingPage() {
 
 export const SignInLink = () => <Link to={ROUTES.SIGN_IN}>Sign in</Link>;
 export const SignUpLink = () => <Link to={ROUTES.SIGN_UP}>Sign up</Link>;
+=======
+
 export default LandingPage;
