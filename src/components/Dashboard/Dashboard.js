@@ -3,7 +3,7 @@ import React, {
   useRef,
   useEffect,
   useContext,
-  useCallback,
+  useCallback
 } from 'react';
 import { Trash2 as Trash, Circle, CheckCircle } from 'react-feather';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,7 +13,7 @@ import {
   Switch,
   useRouteMatch,
   useHistory,
-  Redirect,
+  Redirect
 } from 'react-router-dom';
 import { useSession } from '../session';
 import moment from 'moment';
@@ -22,14 +22,24 @@ import {
   ToggleTaskStatus,
   deleteTask,
   editTask,
-  setTaskList,
+  setTaskList
 } from '../../actions/tasksActions';
 import './Dashboard.scss';
 import DICT from './Dashboard.dict.json';
 import { logOut } from '../../actions/authActions';
-import Navbar from './Navbar';
-import { LogOut as LogOutIcon } from 'react-feather';
-import Sidebar from '../Sidebar';
+
+const StatusBar = ({ taskNumber }) => {
+  return (
+    <div className=" status-bar bg-white text-sm text-center bg-light rounded-lg p-1 py-4 my-4 mx-auto">
+      <p className="text-sm hidden-md-down my-2">
+        {DICT['en'].TODAY}, {moment().format('DD MMM YYYY')}
+      </p>
+      <p className="font-weight-bold text-md my-1">
+        {DICT['en'].YOU_HAVE} ({taskNumber}) {DICT['en'].TODO_TODAY}
+      </p>
+    </div>
+  );
+};
 function TaskInput({ closeTaskForm }) {
   const dispatch = useDispatch();
   const firebase = useContext(FirebaseContext);
@@ -51,7 +61,7 @@ function TaskInput({ closeTaskForm }) {
       completedAt: '',
       date: date,
       time: '',
-      createdAt: Date.now(),
+      createdAt: Date.now()
     };
     addNewTask(dispatch, firebase, uid, data);
   };
@@ -62,37 +72,37 @@ function TaskInput({ closeTaskForm }) {
   };
 
   return (
-    <form className='row p-4 shadow rounded' onSubmit={SubmitTask}>
-      <div className='col-12 col-md-5'>
+    <form className="row p-4 shadow rounded" onSubmit={SubmitTask}>
+      <div className="col-12 col-md-5">
         <input
-          className='input-lg rounded'
-          type='text'
+          className="input-lg rounded"
+          type="text"
           ref={ref}
           value={note}
           onChange={onInputNoteChange}
           placeholder={DICT['en'].ADD_TASK_PLACEHOLDER}
         />
       </div>
-      <div className='col-12 col-md-5'>
+      <div className="col-12 col-md-5">
         <input
-          className='input-lg rounded'
+          className="input-lg rounded"
           placeholder={moment().format('YYYY-MM-DD')}
-          type='date'
+          type="date"
           value={date}
           onChange={onInputDateChange}
-          name='date'
+          name="date"
           min={moment().format('YYYY-MM-DD')}
         />
       </div>
-      <div className='col-12 row'>
+      <div className="col-12 row">
         <button
-          className='btn btn-sm btn-outline-primary rounded block-md-down '
+          className="btn btn-sm btn-outline-primary rounded block-md-down "
           onClick={SubmitTask}
         >
           {DICT['en'].BTN_ADD}
         </button>
         <button
-          className=' btn btn-sm btn-outline-light text-grey  rounded block-md-down'
+          className=" btn btn-sm btn-outline-light text-grey  rounded block-md-down"
           onClick={closeTaskForm}
         >
           {DICT['en'].BTN_CANCEL}
@@ -103,8 +113,8 @@ function TaskInput({ closeTaskForm }) {
 }
 function TaskEdit({
   match: {
-    params: { taskId },
-  },
+    params: { taskId }
+  }
 }) {
   const firebase = useContext(FirebaseContext);
   const { uid } = useSession();
@@ -127,7 +137,7 @@ function TaskEdit({
     const data = {
       note: note,
       date: date,
-      editedAt: Date.now(),
+      editedAt: Date.now()
     };
     editTask(dispatch, firebase, uid, taskId, data, history);
   };
@@ -138,37 +148,37 @@ function TaskEdit({
   return (
     <>
       {list.length > 0 ? (
-        <form className='row p-4 shadow rounded' onSubmit={SubmitTask}>
-          <div className='col-12 col-md-5'>
+        <form className="row p-4 shadow rounded" onSubmit={SubmitTask}>
+          <div className="col-12 col-md-5">
             <input
-              className='input-lg rounded'
-              type='text'
+              className="input-lg rounded"
+              type="text"
               ref={ref}
               value={note}
               onChange={onInputNoteChange}
               placeholder={DICT['en'].ADD_TASK_PLACEHOLDER}
             />
           </div>
-          <div className='col-12 col-md-5'>
+          <div className="col-12 col-md-5">
             <input
-              className='input-lg rounded'
+              className="input-lg rounded"
               placeholder={moment().format('YYYY-MM-DD')}
-              type='date'
+              type="date"
               value={date}
               onChange={onInputDateChange}
-              name='date'
+              name="date"
               min={moment().format('YYYY-MM-DD')}
             />
           </div>
-          <div className='col-12 row'>
+          <div className="col-12 row">
             <button
-              className='btn btn-sm btn-outline-primary rounded block-md-down '
+              className="btn btn-sm btn-outline-primary rounded block-md-down "
               onClick={SubmitTask}
             >
               {DICT['en'].BTN_SAVE}
             </button>
             <button
-              className=' btn btn-sm btn-outline-light text-grey  rounded block-md-down'
+              className=" btn btn-sm btn-outline-light text-grey  rounded block-md-down"
               onClick={() => history.push('/dashboard')}
             >
               {DICT['en'].BTN_CANCEL}
@@ -192,40 +202,40 @@ function TaskRow({ task }) {
     history.push(`${url}/edit/${id}`);
   };
   return (
-    <div className='task-row row align-items-center rounded-lg mb-3 p-2 '>
-      <div className=' '>
-        <div className='mr-1'>
-          <label className='checkbox-label'>
+    <div className="task-row row align-items-center rounded-lg mb-3 p-2 ">
+      <div className=" ">
+        <div className="mr-1">
+          <label className="checkbox-label">
             <input
-              type='checkbox'
-              name='check'
+              type="checkbox"
+              name="check"
               onChange={() => ToggleTaskStatus(dispatch, firebase, uid, id)}
               checked={completed}
             />
             {completed ? (
-              <CheckCircle className='checkbox checked ' />
+              <CheckCircle className="checkbox checked " />
             ) : (
-              <Circle className='checkbox ' />
+              <Circle className="checkbox " />
             )}
           </label>
         </div>
       </div>
-      <div className='col-xs-10 col-md-10 px-0' onClick={() => editTask(id)}>
-        <div className='row align-items-center px-0'>
-          <div className='col-12 col-md-10  task-note my-0 px-0'>
+      <div className="col-xs-10 col-md-10 px-0" onClick={() => editTask(id)}>
+        <div className="row align-items-center px-0">
+          <div className="col-12 col-md-10  task-note my-0 px-0">
             <span>{note}</span>
           </div>
-          <div className='col-12 col-md-2 date'>
-            <span className='text-xs text-grey '>
+          <div className="col-12 col-md-2 date">
+            <span className="text-xs text-grey ">
               {moment(date).format('DD-MMM-YYYY')}
             </span>
           </div>
         </div>
       </div>
-      <div className='col-xs-1 '>
+      <div className="col-xs-1 ">
         <Trash
-          className='icon '
-          size='18'
+          className="icon "
+          size="18"
           onClick={() => deleteTask(dispatch, firebase, uid, id)}
         />
       </div>
@@ -238,25 +248,40 @@ const TaskLister = ({ list }) => {
       {list.length > 0 ? (
         list.map(item => <TaskRow key={item.id} task={item} />)
       ) : (
-        <p className='text-center'>{DICT['en'].NO_TASK}</p>
+        <p className="text-center">{DICT['en'].NO_TASK}</p>
       )}
     </>
   );
 };
-export const LogOutBtn = () => {
+const LogOut = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const firebase = useContext(FirebaseContext);
   return (
     <button
-      className='btn btn-sm px-1'
+      className="btn btn-sm"
       onClick={() => logOut(dispatch, firebase, history)}
     >
-      <LogOutIcon size={16} className=' text-dark mx-2' />
+      Log out
     </button>
   );
 };
-
+const Cols = () => (
+  <div className="row">
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+    <div className="col-1"></div>
+  </div>
+);
 function Dashboard({ match: { path } }) {
   const dispatch = useDispatch();
   const firebase = useContext(FirebaseContext);
@@ -280,20 +305,22 @@ function Dashboard({ match: { path } }) {
   return (
     <>
       {isAuthenticated ? (
-        <div className='container'>
-          <div className='px-4'>
-            <Navbar DICT={DICT} taskNumber={taskNumber} />
+        <div className="container">
+          <div className="px-4">
+            <LogOut />
+            <StatusBar taskNumber={taskNumber} />
             <Switch>
               <Route
                 exact
                 path={path}
                 render={() => (
                   <>
+                    <Cols />
                     <TaskLister list={list} />
                     {!showInput && (
                       <button
                         onClick={openTaskForm}
-                        className='btn btn-outline-primary rounded block-md-down'
+                        className="btn btn-outline-primary rounded block-md-down"
                       >
                         {DICT['en'].BTN_NEW_TASK}
                       </button>
@@ -308,7 +335,7 @@ function Dashboard({ match: { path } }) {
           </div>
         </div>
       ) : (
-        <Redirect to='/landing' />
+        <Redirect to="/landing" />
       )}
     </>
   );

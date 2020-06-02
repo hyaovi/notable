@@ -1,15 +1,7 @@
+$blue: #0747a6;
+$green: #03a87c;
+$teal: #00b8d9;
 
-.intro {
-  display: flex;
-  align-items: center;
-  flex-flow: row wrap-reverse;
-  justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(rgba(37, 56, 88, 0.6), rgba(37, 56, 88, 0.4)),
-    url('../../assets/img/landing-bg.jpg') no-repeat center;
+.side-hero {
+  background-color: $blue;
 }
-.card {
-  border: 1px solid white;
-  background: white;
-  border-radius: 0.5rem;
-  padding: 1rem;

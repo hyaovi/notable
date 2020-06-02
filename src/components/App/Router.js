@@ -7,16 +7,17 @@ import {
   Redirect
 } from 'react-router-dom';
 
+import './App.scss';
 import '../../assets/sass/mint.scss';
 import LandingPage from '../LandingPage';
 import Dashboard from '../Dashboard';
+import LoginPage from '../LoginPage';
 import * as ROUTES from '../../constant/routes';
 import { useAuthState } from '../session';
 import { FirebaseContext } from '../../firebase';
 import { setCurrentUser } from '../../actions/authActions';
-import RegisterPage from '../RegisterPage/RegisterPage';
 
-export default () => {
+function RouterApp() {
   const firebase = useContext(FirebaseContext);
   const { initialize, userAuth } = useAuthState(firebase);
   const dispatch = useDispatch();
@@ -38,11 +39,13 @@ export default () => {
           <Switch>
             <Route path={ROUTES.DASHBOARD} component={Dashboard} />
             <Route path={ROUTES.LANDING} component={LandingPage} />
-            <Route path={ROUTES.SIGN_UP} component={RegisterPage} />
+            <Route path={ROUTES.SIGN_IN} component={LoginPage} />
             <Redirect from={ROUTES.ROOT} to="/dashboard" />
           </Switch>
         </Router>
       )}
     </>
   );
-};
+}
+
+export default RouterApp;

@@ -3,17 +3,12 @@ input,
 input[type='text'],
 input[type='email'],
 input[type='password'] {
-  font-size: 14px;
-  margin-bottom: 6 * $base-size;
+  font-size: 16px;
+  margin-bottom: 2 * $base-size;
   display: block !important;
   border-radius: 1.2 * $base-size !important;
-  border: 1px solid $color-light !important;
+  border: 2px solid $color-light !important;
   width: 100% !important;
-  transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-  appearance: none;
-  &:focus {
-    border: 1px solid $blue !important;
-  }
 }
 input[type='text'] {
   padding: 2 * $base-size 3 * $base-size;
