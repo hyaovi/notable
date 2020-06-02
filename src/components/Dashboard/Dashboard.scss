@@ -4,50 +4,57 @@
   justify-content: center;
 }
 
-.status-bar {
-  position: relative;
-  text-align: center;
-  .row {
-    justify-content: space-evenly;
-  }
+.nav-items {
+  display: flex;
+  align-items: center;
 }
+
 .task-row {
   border: 1px solid whitesmoke;
   justify-content: space-between;
+
   .date {
     text-align: left;
   }
+
   .task-note {
     cursor: pointer;
   }
 }
+
 @media screen and (min-width: 600px) {
   .note-row {
     .date {
       text-align: right;
     }
   }
+
   .status-bar {
     text-align: initial;
   }
 }
+
 .icon {
   color: #ff5630;
   cursor: pointer;
   transition: all 0.3s ease-in;
+
   &:hover {
     color: #ff5630;
     transform: rotate(180deg);
   }
 }
+
 .checkbox-label {
   position: relative;
   cursor: pointer;
   user-select: none;
   display: block;
+
   input {
     display: none !important;
   }
+
   .checkbox {
     top: 0;
     left: 0;
@@ -56,6 +63,7 @@
     color: lightgrey;
     display: inline-block;
     background-color: #fff;
+
     &.checked {
       color: #03a87c !important;
     }
