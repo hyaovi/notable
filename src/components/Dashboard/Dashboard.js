@@ -29,7 +29,7 @@ import DICT from './Dashboard.dict.json';
 import { logOut } from '../../actions/authActions';
 import Navbar from './Navbar';
 import { LogOut as LogOutIcon } from 'react-feather';
-import Sidebar from '../Sidebar';
+
 function TaskInput({ closeTaskForm }) {
   const dispatch = useDispatch();
   const firebase = useContext(FirebaseContext);
@@ -55,7 +55,7 @@ function TaskInput({ closeTaskForm }) {
     };
     addNewTask(dispatch, firebase, uid, data);
   };
-  const SubmitTask = event => {
+  const SubmitTask = (event) => {
     event.preventDefault();
     sumbitNewTask();
     closeTaskForm();
@@ -109,8 +109,8 @@ function TaskEdit({
   const firebase = useContext(FirebaseContext);
   const { uid } = useSession();
   let history = useHistory();
-  let { list } = useSelector(state => state.tasks);
-  let taskToEdit = list.filter(task => task.id === taskId)[0] || {};
+  let { list } = useSelector((state) => state.tasks);
+  let taskToEdit = list.filter((task) => task.id === taskId)[0] || {};
   const dispatch = useDispatch();
   const ref = useRef(null);
   useEffect(() => {
@@ -131,7 +131,7 @@ function TaskEdit({
     };
     editTask(dispatch, firebase, uid, taskId, data, history);
   };
-  const SubmitTask = event => {
+  const SubmitTask = (event) => {
     event.preventDefault();
     submitEditTask();
   };
@@ -188,7 +188,7 @@ function TaskRow({ task }) {
   const firebase = useContext(FirebaseContext);
   const { uid } = useSession();
   const { id, note, completed, date } = task;
-  const editTask = id => {
+  const editTask = (id) => {
     history.push(`${url}/edit/${id}`);
   };
   return (
@@ -236,11 +236,23 @@ const TaskLister = ({ list }) => {
   return (
     <>
       {list.length > 0 ? (
-        list.map(item => <TaskRow key={item.id} task={item} />)
+        list.map((item) => <TaskRow key={item.id} task={item} />)
       ) : (
         <p className='text-center'>{DICT['en'].NO_TASK}</p>
       )}
     </>
+  );
+};
+const StatusBar = ({ taskNumber }) => {
+  return (
+    <div className=' status-bar bg-white text-sm text-center bg-light rounded-lg p-1 py-4 my-4 mx-auto'>
+      <p className='text-sm hidden-md-down my-2'>
+        {DICT['en'].TODAY}, {moment().format('DD MMM YYYY')}
+      </p>
+      <p className='font-weight-bold text-md my-1'>
+        {DICT['en'].YOU_HAVE} ({taskNumber}) {DICT['en'].TODO_TODAY}
+      </p>
+    </div>
   );
 };
 export const LogOutBtn = () => {
@@ -270,7 +282,7 @@ function Dashboard({ match: { path } }) {
     setUserTasksList();
     return () => setUserTasksList();
   }, [setUserTasksList]);
-  let { list } = useSelector(state => state.tasks);
+  let { list } = useSelector((state) => state.tasks);
 
   const [showInput, setShowInput] = useState(false);
   const openTaskForm = () => setShowInput(true);
@@ -283,12 +295,14 @@ function Dashboard({ match: { path } }) {
         <div className='container'>
           <div className='px-4'>
             <Navbar DICT={DICT} taskNumber={taskNumber} />
+
             <Switch>
               <Route
                 exact
                 path={path}
                 render={() => (
                   <>
+                    <StatusBar taskNumber={taskNumber} />
                     <TaskLister list={list} />
                     {!showInput && (
                       <button
