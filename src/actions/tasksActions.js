@@ -3,14 +3,14 @@ import {
   DELETE_TASK,
   LOADING,
   EDIT_TASK,
-  SET_TASK_LIST
+  SET_TASK_LIST,
 } from './actionTypes';
 import { getErrors, finishedLoading } from './authActions';
 export const getCurrentTaskList = (firebase, uid) => {
   let currentTaskList;
   firebase
     .task(uid)
-    .once('value', taskList => (currentTaskList = taskList.val()));
+    .once('value', (taskList) => (currentTaskList = taskList.val()));
   return currentTaskList || [];
 };
 export const addNewTask = async (dispatch, firebase, uid, newTask) => {
@@ -18,7 +18,7 @@ export const addNewTask = async (dispatch, firebase, uid, newTask) => {
   let currentTaskList = getCurrentTaskList(firebase, uid);
   const updatedTaskList = [
     ...currentTaskList,
-    { ...newTask, id: `${Date.now()}0${currentTaskList.length + 1}` }
+    { ...newTask, id: `${Date.now()}0${currentTaskList.length + 1}` },
   ];
   firebase.task(uid).set(updatedTaskList);
   dispatch(finishedLoading());
@@ -26,11 +26,11 @@ export const addNewTask = async (dispatch, firebase, uid, newTask) => {
 export const editTask = (dispatch, firebase, uid, taskId, data, history) => {
   dispatch(isLoading());
   let currentTaskList = getCurrentTaskList(firebase, uid);
-  const taskIndex = currentTaskList.findIndex(item => item.id === taskId);
+  const taskIndex = currentTaskList.findIndex((item) => item.id === taskId);
   dispatch({ type: EDIT_TASK, payload: { taskId, data } });
   currentTaskList[taskIndex] = {
     ...currentTaskList[taskIndex],
-    ...data
+    ...data,
   };
   firebase.task(uid).set(currentTaskList);
   dispatch(finishedLoading());
@@ -39,16 +39,15 @@ export const editTask = (dispatch, firebase, uid, taskId, data, history) => {
 export const ToggleTaskStatus = async (dispatch, firebase, uid, taskId) => {
   dispatch(isLoading());
   let currentTaskList = getCurrentTaskList(firebase, uid);
-  const taskIndex = currentTaskList.findIndex(item => item.id === taskId);
+  const taskIndex = currentTaskList.findIndex((item) => item.id === taskId);
   currentTaskList[taskIndex] = {
     ...currentTaskList[taskIndex],
-    completed: !currentTaskList[taskIndex].completed
+    completed: !currentTaskList[taskIndex].completed,
   };
-  console.log(currentTaskList);
   await firebase.task(uid).set(currentTaskList);
   dispatch({
     type: TOGGLE_TASK_STATUS,
-    payload: currentTaskList
+    payload: currentTaskList,
   });
   dispatch(finishedLoading());
 };
@@ -56,8 +55,7 @@ export const deleteTask = (dispatch, firebase, uid, taskId) => {
   dispatch(isLoading());
   dispatch({ type: DELETE_TASK });
   let currentTaskList = getCurrentTaskList(firebase, uid);
-  let updatedList = currentTaskList.filter(item => item.id !== taskId);
-  console.log(updatedList);
+  let updatedList = currentTaskList.filter((item) => item.id !== taskId);
   firebase.task(uid).set(updatedList);
 
   // dispatch({ type: DELETE_TASK, payload: taskId });
@@ -65,7 +63,7 @@ export const deleteTask = (dispatch, firebase, uid, taskId) => {
 };
 export const isLoading = (loading = true) => ({
   type: LOADING,
-  payload: loading
+  payload: loading,
 });
 
 export const setTaskList = async (dispatch, firebase, uid) => {
@@ -73,7 +71,7 @@ export const setTaskList = async (dispatch, firebase, uid) => {
     dispatch(isLoading());
     firebase
       .task(uid)
-      .on('value', snapshot =>
+      .on('value', (snapshot) =>
         dispatch({ type: SET_TASK_LIST, payload: snapshot.val() })
       );
   } catch (error) {
