@@ -6,13 +6,13 @@ import 'firebase/database';
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  apiKey: 'AIzaSyCKopws_jq4Yp1NJnzuCj41PqET_v8T2Tc',
-  authDomain: 'notable-44fa9.firebaseapp.com',
-  databaseURL: 'https://notable-44fa9.firebaseio.com',
-  projectId: 'notable-44fa9',
-  storageBucket: 'notable-44fa9.appspot.com',
-  messagingSenderId: '349747978169',
-  appId: '1:349747978169:web:ef9df8a8dd5bbf2b1fe068'
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  databaseURL: process.env.REACT_APP_databaseURL,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
 };
 
 class Firebase {
@@ -30,8 +30,8 @@ class Firebase {
   signOut = () => this.auth.signOut();
 
   // database methods
-  user = uid => this.db.ref(`users/${uid}`);
-  task = uid => this.db.ref(`tasks/${uid}`);
+  user = (uid) => this.db.ref(`users/${uid}`);
+  task = (uid) => this.db.ref(`tasks/${uid}`);
   users = () => this.db.ref('users');
 }
 
