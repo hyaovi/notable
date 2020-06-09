@@ -192,37 +192,35 @@ function TaskRow({ task }) {
     history.push(`${url}/edit/${id}`);
   };
   return (
-    <div className='task-row row align-items-center rounded-lg mb-3 p-2 '>
-      <div className=' '>
-        <div className='mr-1'>
-          <label className='checkbox-label'>
-            <input
-              type='checkbox'
-              name='check'
-              onChange={() => ToggleTaskStatus(dispatch, firebase, uid, id)}
-              checked={completed}
-            />
-            {completed ? (
-              <CheckCircle className='checkbox checked ' />
-            ) : (
-              <Circle className='checkbox ' />
-            )}
-          </label>
-        </div>
+    <div className='task-row row align-items-center rounded-lg mb-3 nowrap py-3'>
+      <div className='col'>
+        <label className='checkbox-label'>
+          <input
+            type='checkbox'
+            name='check'
+            onChange={() => ToggleTaskStatus(dispatch, firebase, uid, id)}
+            checked={completed}
+          />
+          {completed ? (
+            <CheckCircle className='checkbox checked ' />
+          ) : (
+            <Circle className='checkbox ' />
+          )}
+        </label>
       </div>
-      <div className='col-xs-10 col-md-10 px-0' onClick={() => editTask(id)}>
-        <div className='row align-items-center px-0'>
-          <div className='col-12 col-md-10  task-note my-0 px-0'>
+      <div className='col-8 col-md-10' onClick={() => editTask(id)}>
+        <div className='row align-items-center px-0 text-left'>
+          <div className='col-12 col-md-9  task-note my-0 px-0'>
             <span>{note}</span>
           </div>
-          <div className='col-12 col-md-2 date'>
+          <div className='col-12 col-md-3 date my-0 px-0'>
             <span className='text-xs text-grey '>
               {moment(date).format('DD-MMM-YYYY')}
             </span>
           </div>
         </div>
       </div>
-      <div className='col-xs-1 '>
+      <div className='col-1 '>
         <Trash
           className='icon '
           size='18'
