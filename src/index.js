@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
+console.log('LOGS', process.env.REACT_APP_apiKey);
 ReactDOM.render(<App />, document.getElementById('root'));
 
 if (module.hot) {
